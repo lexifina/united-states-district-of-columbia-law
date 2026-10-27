@@ -1,0 +1,28 @@
+{
+  "corpus": "us/district-of-columbia/statutes",
+  "code": "DC",
+  "name": "Code of the District of Columbia",
+  "label": "D.C. Code",
+  "language": "en",
+  "history_from": "2021-10-18",
+  "record_to": "2026-10-27",
+  "record_note": "The D.C. Code at each of the DC Council's 396 dated publications from 2021-10-18 to 2026-10-27, via DCCouncil/law-xml-codified; built 2026-10-28.",
+  "in_force_trailer": "In-force",
+  "baseline_trailer": "Consolidated",
+  "has_future_branch": false,
+  "author": "the D.C. Law or Act (or Act of Congress) the section's new History notes name (Law trailer); otherwise the publication",
+  "granularity": "the law's effective date where it falls between two publications; otherwise the publication date (Published trailer)",
+  "scope": {
+    "when_absent": "the D.C. Code records applicability in each law's notes (Applicability annotations), not case by case",
+    "default_reach": {
+      "rule": "presumption against retroactivity: a statute is not applied to events completed before its enactment absent clear legislative intent",
+      "authority": "Landgraf v. USI Film Products, 511 U.S. 244 (1994), applied by the D.C. Court of Appeals",
+      "decided_here": false
+    }
+  },
+  "citation": {
+    "file": "(title-[0-9A-Z]+)/([0-9][0-9A-Za-z.-]*)\\.md",
+    "cites": "§ ?{n}([^0-9a-zA-Z.:-]|\\.([^0-9a-zA-Z]|$)|$)"
+  },
+  "tool": "tools/dc.py"
+}
