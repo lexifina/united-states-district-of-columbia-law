@@ -5,60 +5,34 @@
 ```sh
 mkdir -p dc/cache && cp build/build.py build/docs.py build/tool.py dc/ && cd dc
 python build.py fetch                  # robots.txt, repo metadata, and two git clones (all cached)
-python build.py repo ../rebuilt --ref publication/2026-05-23.2026-10-27
+python build.py repo ../rebuilt --ref publication/2026-05-23.2026-11-04
 git -C ../rebuilt log --format=%H      # the same commits, with the same hashes
 ```
 
-The history was built from `publication/2026-05-23.2026-10-27` at commit `08f220516b9eab297629753d8a2b8be02fb82c17` of law-xml-codified and from law-xml at commit
-`ad61a5193324fa0818d9a7bf1aec8e71197121e8`. Both repositories keep growing; a later clone gives the same history up to 2026-10-27 as
-long as those commits are used (`--ref <commit>` works too). The last commit before the documentation is `c86553b84d5c67455c369cd036c6569aa3022e92`.
+The history was built from `publication/2026-05-23.2026-11-04` at commit `930a8937e2a6dc7174c002bdb74c128b27fd56f0` of law-xml-codified and from law-xml at commit
+`4bf03a58c3cb98cb1ff8923ed5d5f2af7738e643`. Both repositories keep growing; a later clone gives the same history up to 2026-11-04 as
+long as those commits are used (`--ref <commit>` works too). The last commit before the documentation is `8de5e4b8405dfb5bb7ba33790933aadb666bc7d3`.
 
 ## Sources
 
-| What | Where | Requests | Retrieved |
-| --- | --- | ---: | --- |
-| robots.txt | `https://github.com/robots.txt`, `https://api.github.com/robots.txt` | 2 | 2026-10-28 |
-| Repository metadata and READMEs (for the licence statement; none is present) | `https://api.github.com/repos/DCCouncil/<repo>` and `/readme`, for law-xml, law-xml-codified, law-html | 5 | 2026-10-28 |
-| The code at every publication | `git clone --mirror https://github.com/DCCouncil/law-xml-codified` (105.4 MB on disk) | 1 clone (2 HTTP requests) | 2026-10-28 |
-| The laws and acts (short title, effective date, Register citation) | `git clone --mirror https://github.com/DCCouncil/law-xml` (155.2 MB on disk) | 1 clone (2 HTTP requests) | 2026-10-28 |
+| What | Where | Retrieved |
+| --- | --- | --- |
+| robots.txt | `https://github.com/robots.txt`, `https://api.github.com/robots.txt` | 2026-10-28 |
+| Repository metadata and READMEs (for the licence statement; none is present) | `https://api.github.com/repos/DCCouncil/<repo>` and `/readme`, for law-xml, law-xml-codified, law-html | 2026-10-28 |
+| The code at every publication | `git clone --mirror https://github.com/DCCouncil/law-xml-codified` (106.8 MB on disk) | 2026-10-28 (updated by later fetches) |
+| The laws and acts (short title, effective date, Register citation) | `git clone --mirror https://github.com/DCCouncil/law-xml` (155.5 MB on disk) | 2026-10-28 (updated by later fetches) |
 
 Nothing was read from code.dccouncil.gov. `build/DATA-SHA256SUMS` lists the sha256 of every HTTP response, of the
 `git ls-tree` listing of the code at each publication commit (which pins every file by its git hash), and of every law
-file read (sha256 of that list: `c777ec0d3b6171509fb9bb5541de997f03727ecc4ad72a7f36a4bec734650070`).
+file read (sha256 of that list: `a1885f8c3165a482d8efddb317311cbdaed119c29c15ef23d3ac5b9013e401ca`).
 
 **robots.txt, checked 28 October 2026.**
 
-- **code.dccouncil.gov** (recorded in Lexifina's source survey, not fetched again for this build) names ClaudeBot:
-  `User-agent: ClaudeBot` / `Disallow: /`, and carries `Content-signal: search=yes,ai-train=no`. **Not used.** The site's
-  footer says: "The codes and laws on this website are in the public domain. Please do not scrape. Instead, bulk download
-  the HTML or XML", linking to the GitHub repositories used here.
-- **github.com**, the group that names ClaudeBot (relevant lines):
-
-```
-User-agent: GPTBot
-User-agent: OAI-SearchBot
-User-agent: ClaudeBot
-User-agent: anthropic-ai
-User-agent: PerplexityBot
-Crawl-delay: 1
-Disallow: /*/archive/
-Disallow: /*/raw/
-Disallow: */tarball/
-Disallow: */zipball/
-Disallow: /.git/
-Disallow: */.git/
-Disallow: /*.git$
-Disallow: /*/*/commits/
-Disallow: /*/*/branches$
-Disallow: /*/*/branches?*
-Disallow: /*/*/branches/*
-```
-
-  The clones use the repository URLs without `.git` (`/DCCouncil/law-xml-codified/info/refs`, `.../git-upload-pack`),
-  which no rule disallows; no archive, tarball, raw, tree, commits or branches page was requested. Requests were made one
-  at a time, at least 1.5 seconds apart (Crawl-delay: 1). User agent for HTTP:
-  `Mozilla/5.0 (compatible; Lexifina state law history; +https://lexifina.com/watch)`; for git:
-  `git/2 (Lexifina state law history; +https://lexifina.com/watch)`.
+- **code.dccouncil.gov** disallows ClaudeBot in its robots.txt and asks that the site not be scraped, pointing to the
+  GitHub repositories used here instead. **Not used.**
+- **github.com**: its robots.txt group for AI crawlers disallows archive, raw, tree, commits and branches pages and paths
+  ending in `.git`. The clones use the repository URLs without `.git`, which no rule disallows; nothing else on
+  github.com was requested. Requests were made one at a time, at least 1.5 seconds apart, as its Crawl-delay asks.
 - **api.github.com** has no robots.txt (404).
 
 ## The build, step by step
@@ -69,13 +43,13 @@ Disallow: /*/*/branches/*
    compared the rendering with every text node of its source XML, character for character with whitespace removed: no
    section differs.
 3. `python build.py repo <out>` wrote the history with `git fast-import` (git 2.46.0.windows.1), then the documentation commit,
-   dated 2026-10-27.
+   dated 2026-11-04.
 
 `build/build.py` has git blob `5b5be7f956926c9b778cf95a5a25d18ecb7dbdd4`, the same file as `scripts/state-law/dc/build.py` in Lexifina's repository.
 
 ## Decisions made by hand
 
-1. **The publications.** law-xml-codified has 396 dated publications on the first-parent line of its
+1. **The publications.** law-xml-codified has 399 dated publications on the first-parent line of its
    newest branch (the publisher rebuilt the whole series on 2026-05-23; its trees match the older `publication/2021-10-18.*`
    branches on every date sampled). Three older branches (2023-11-05, 2025-04-02, 2025-04-09) are not in the rebuilt
    series and are not used; their changes appear in the next publication. Where a day had two publications, the later is

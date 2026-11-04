@@ -1,7 +1,7 @@
 # Git for the Code of the District of Columbia
 
 The text of the D.C. Code, section by section, with a commit for each change between the DC Council's dated
-publications of the code, from 2021-10-18 to 2026-10-27. Where a section's history notes name the law that
+publications of the code, from 2021-10-18 to 2026-11-04. Where a section's history notes name the law that
 changed it and give its effective date, **the commit is the law taking effect**: its author is the D.C. Law or Act,
 and its date is the law's effective date.
 
@@ -19,10 +19,10 @@ where no effective date applies (see below), so the answer does not depend on yo
 
 ## What is here
 
-54 titles and 24225 section files as of 2026-10-27, from 396 dated
-publications. There are 1677 commits: the code as first published on 2021-10-18; 1405
-credited to a D.C. Law or Act (or an Act of Congress), 1138 of them dated by the law's effective date and
-267 by the publication that first showed the change (see below); 270 publication commits for changes
+54 titles and 24228 section files as of 2026-11-04, from 399 dated
+publications. There are 1684 commits: the code as first published on 2021-10-18; 1410
+credited to a D.C. Law or Act (or an Act of Congress), 1141 of them dated by the law's effective date and
+269 by the publication that first showed the change (see below); 272 publication commits for changes
 whose notes name no new law; and this documentation. Each section is one Markdown file, `title-<n>/<section>.md`, with
 one designated provision per line (`- (a) ...`, indented two spaces per level), so `git blame` names a law for every
 provision. The last lines are the section's source note: its History notes, one per law, each naming a law, its

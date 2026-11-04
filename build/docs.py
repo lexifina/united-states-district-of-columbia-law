@@ -125,12 +125,12 @@ long as those commits are used (`--ref <commit>` works too). The last commit bef
 
 ## Sources
 
-| What | Where | Requests | Retrieved |
-| --- | --- | ---: | --- |
-| robots.txt | `https://github.com/robots.txt`, `https://api.github.com/robots.txt` | 2 | 2026-10-28 |
-| Repository metadata and READMEs (for the licence statement; none is present) | `https://api.github.com/repos/DCCouncil/<repo>` and `/readme`, for law-xml, law-xml-codified, law-html | 5 | 2026-10-28 |
-| The code at every publication | `git clone --mirror https://github.com/DCCouncil/law-xml-codified` ({mb.get('law-xml-codified.git')} MB on disk) | 1 clone (2 HTTP requests) | 2026-10-28 |
-| The laws and acts (short title, effective date, Register citation) | `git clone --mirror https://github.com/DCCouncil/law-xml` ({mb.get('law-xml.git')} MB on disk) | 1 clone (2 HTTP requests) | 2026-10-28 |
+| What | Where | Retrieved |
+| --- | --- | --- |
+| robots.txt | `https://github.com/robots.txt`, `https://api.github.com/robots.txt` | 2026-10-28 |
+| Repository metadata and READMEs (for the licence statement; none is present) | `https://api.github.com/repos/DCCouncil/<repo>` and `/readme`, for law-xml, law-xml-codified, law-html | 2026-10-28 |
+| The code at every publication | `git clone --mirror https://github.com/DCCouncil/law-xml-codified` ({mb.get('law-xml-codified.git')} MB on disk) | 2026-10-28 (updated by later fetches) |
+| The laws and acts (short title, effective date, Register citation) | `git clone --mirror https://github.com/DCCouncil/law-xml` ({mb.get('law-xml.git')} MB on disk) | 2026-10-28 (updated by later fetches) |
 
 Nothing was read from code.dccouncil.gov. `build/DATA-SHA256SUMS` lists the sha256 of every HTTP response, of the
 `git ls-tree` listing of the code at each publication commit (which pins every file by its git hash), and of every law
@@ -138,21 +138,11 @@ file read (sha256 of that list: `{i['data_sha256']}`).
 
 **robots.txt, checked 28 October 2026.**
 
-- **code.dccouncil.gov** (recorded in Lexifina's source survey, not fetched again for this build) names ClaudeBot:
-  `User-agent: ClaudeBot` / `Disallow: /`, and carries `Content-signal: search=yes,ai-train=no`. **Not used.** The site's
-  footer says: "The codes and laws on this website are in the public domain. Please do not scrape. Instead, bulk download
-  the HTML or XML", linking to the GitHub repositories used here.
-- **github.com**, the group that names ClaudeBot (relevant lines):
-
-```
-{_robots(i['robots_github'])}
-```
-
-  The clones use the repository URLs without `.git` (`/DCCouncil/law-xml-codified/info/refs`, `.../git-upload-pack`),
-  which no rule disallows; no archive, tarball, raw, tree, commits or branches page was requested. Requests were made one
-  at a time, at least 1.5 seconds apart (Crawl-delay: 1). User agent for HTTP:
-  `Mozilla/5.0 (compatible; Lexifina state law history; +https://lexifina.com/watch)`; for git:
-  `git/2 (Lexifina state law history; +https://lexifina.com/watch)`.
+- **code.dccouncil.gov** disallows ClaudeBot in its robots.txt and asks that the site not be scraped, pointing to the
+  GitHub repositories used here instead. **Not used.**
+- **github.com**: its robots.txt group for AI crawlers disallows archive, raw, tree, commits and branches pages and paths
+  ending in `.git`. The clones use the repository URLs without `.git`, which no rule disallows; nothing else on
+  github.com was requested. Requests were made one at a time, at least 1.5 seconds apart, as its Crawl-delay asks.
 - **api.github.com** has no robots.txt (404).
 
 ## The build, step by step
