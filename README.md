@@ -1,5 +1,7 @@
 # Git for the Code of the District of Columbia
 
+Part of [lexifina/global-law](https://github.com/lexifina/global-law), one git history for every country's law: this is the law of District of Columbia, United States, which global-law reads at `united-states/district-of-columbia/statutes/`.
+
 The text of the D.C. Code, section by section, with a commit for each change between the DC Council's dated
 publications of the code, from 2021-10-18 to 2026-11-04. Where a section's history notes name the law that
 changed it and give its effective date, **the commit is the law taking effect**: its author is the D.C. Law or Act,
